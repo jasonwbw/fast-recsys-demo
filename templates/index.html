@@ -1,4 +1,4 @@
-$def with (content_title, content_text)	
+$def with (content_title, content_text, rec_total, recs, other_info, feedback_url)	
 <!DOCTYPE HTML>
 <!--
 	Prologue 1.0 by HTML5 UP
@@ -17,9 +17,11 @@ $def with (content_title, content_text)
 		<script src="$config.static/js/skel.min.js"></script>
 		<script src="$config.static/js/skel-panels.min.js"></script>
 		<script src="$config.static/js/init.js"></script>
+		<noscript>
 			<link rel="stylesheet" href="$config.static/css/skel-noscript.css" />
 			<link rel="stylesheet" href="$config.static/css/style.css" />
 			<link rel="stylesheet" href="$config.static/css/style-wide.css" />
+		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="$config.static/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="$config.static/css/ie8.css" /><![endif]-->
 	</head>
@@ -71,7 +73,7 @@ $def with (content_title, content_text)
 					<section id="top" class="one">
 						<div class="container">
 
-							<a href="http://ineedchemicalx.deviantart.com/art/Moonscape-381829905" class="image featured"><img src="$config.static/images/pic01.jpg" alt="" /></a>
+							<a class="image featured"><img src="$config.static/images/pic01.jpg" alt="" /></a>
                                                         					
 							<header>
 								<h2 class="alt">$content_title</h2>
@@ -80,7 +82,7 @@ $def with (content_title, content_text)
 							<p>$content_text</p>
 
 							<footer>
-								<a href="#portfolio" class="button scrolly">Recommend</a>
+								<a href="#portfolio" class="button scrolly">Recommended</a>
 							</footer>
 
 						</div>
@@ -91,54 +93,37 @@ $def with (content_title, content_text)
 						<div class="container">
 					
 							<header>
-								<h2>Portfolio</h2>
+								<h2>Recommendations</h2>
 							</header>
 							
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-							egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-							Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis 
-							fusce hendrerit lacus ridiculus.</p>
-						
+							$#rec total conclusion
+							<p>$rec_total</p>
+							
 							<div class="row">
 								<div class="4u">
+							    $for i in range(len(recs)/3 + (len(recs)%3 and 1 or 0)):
 									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/A-million-suns-384369739" class="image full"><img src="$config.static/images/pic02.jpg" alt="" /></a>
+										<a class="image full"><img src="$config.static/$recs[i]['img']" alt="" /></a>
 										<header>
-											<h3>Ipsum Feugiat</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/Mind-is-a-clear-stage-375431607" class="image full"><img src="$config.static/images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>Rhoncus Semper</h3>
+											<h3>$recs[i*3]['text']</h3>
 										</header>
 									</article>
 								</div>
 								<div class="4u">
+							    $for i in range(len(recs)/3 + (len(recs)%3==2 and 1 or 0)): 
 									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/You-really-got-me-345249340" class="image full"><img src="$config.static/images/pic04.jpg" alt="" /></a>
+										<a class="image full"><img src="$config.static/$recs[i]['img']" alt="" /></a>
 										<header>
-											<h3>Magna Nullam</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/Ad-infinitum-354203162" class="image full"><img src="$config.static/images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>Natoque Vitae</h3>
+											<h3>$recs[i*3+1]['text']</h3>
 										</header>
 									</article>
 								</div>
 								<div class="4u">
+							    $for i in range(len(recs)/3):						
 									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/Elysium-355393900" class="image full"><img src="$config.static/images/pic06.jpg" alt="" /></a>
+										<a class="image full"><img src="$config.static/$recs[i]['img']" alt="" /></a>
 										<header>
-											<h3>Dolor Penatibus</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="http://ineedchemicalx.deviantart.com/art/Emperor-of-the-Stars-370265193" class="image full"><img src="$config.static/images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>Orci Convallis</h3>
+											<h3>$recs[i*3+2]['text']</h3>
 										</header>
 									</article>
 								</div>
@@ -152,17 +137,12 @@ $def with (content_title, content_text)
 						<div class="container">
 
 							<header>
-								<h2>About Me</h2>
+								<h2>Some other info</h2>
 							</header>
 
-							<a href="http://ineedchemicalx.deviantart.com/art/Pasadena-357650036" class="image featured"><img src="$config.static/images/pic08.jpg" alt="" /></a>
+							<a class="image featured"><img src="$config.static/images/pic08.jpg" alt="" /></a>
 							
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus 
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae 
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem 
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper 
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec 
-							ornare iaculis.</p>
+							<p>$other_info</p>
 
 						</div>
 					</section>
@@ -172,18 +152,15 @@ $def with (content_title, content_text)
 						<div class="container">
 
 							<header>
-								<h2>Contact</h2>
+								<h2>Feedback</h2>
 							</header>
 
-							<p>Elementum sem parturient nulla quam placerat viverra 
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia 
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc 
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
+							<p>Some introduce.</p>
 							
-							<form method="post" action="#">
+							<form method="post" action="$feedback_url">
 								<div class="row half">
-									<div class="6u"><input type="text" class="text" name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="text" class="text" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="text" class="text" name="name" placeholder="Title" /></div>
+									<div class="6u"><input type="text" class="text" name="email" placeholder="RecId" /></div>
 								</div>
 								<div class="row half">
 									<div class="12u">
@@ -192,7 +169,7 @@ $def with (content_title, content_text)
 								</div>
 								<div class="row">
 									<div class="12u">
-										<a href="#" class="button submit">Send Message</a>
+										<a href="#" class="button submit">Feed back</a>
 									</div>
 								</div>
 							</form>
@@ -207,7 +184,7 @@ $def with (content_title, content_text)
 				
 				<!-- Copyright -->
 					<div class="copyright">
-						<p>&copy; 2013 Jane Doe. All rights reserved.</p>
+						<p>&copy; Page design copyright : 2013 Jane Doe. All rights reserved.</p>
 						<ul class="menu">
 							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							<li>Images: <a href="http://ineedchemicalx.deviantart.com">Felicia Simion</a></li>
