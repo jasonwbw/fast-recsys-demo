@@ -12,7 +12,7 @@ render = settings.render
 
 class ContentIndex:
     def GET(self):       
-        content_title, content_text = self._getContent()
+        content_title, content_text = self._get_content()
         rec_total, recs, other_info = self._get_rec(content_title, content_text)
         feedback_url = "./"
         return render.index(content_title, content_text,\
