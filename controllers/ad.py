@@ -10,8 +10,15 @@ sys.setdefaultencoding('utf-8')
 
 render = settings.render
 
-class ContentIndex:
-    def GET(self):       
+# global attribute
+_id = 1
+
+class ContentIndex: 
+
+    def GET(self):
+        global _id
+        _id += 1
+        print '_id' + str(_id)
         content_title, content_text = self._get_content()
         rec_total, recs, other_info = self._get_rec(content_title, content_text)
         feedback_url = "./"
