@@ -5,4 +5,5 @@ pre_fix = 'controllers.'
 
 urls = (
     '/content_base_ad',                           pre_fix + 'ad.ContentIndex',
+    '/feedback_base_ad',                          pre_fix + 'ad.Feedback'
 )

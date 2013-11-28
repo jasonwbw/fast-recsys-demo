@@ -21,7 +21,7 @@ class ContentIndex:
         print '_id' + str(_id)
         content_title, content_text = self._get_content()
         rec_total, recs, other_info = self._get_rec(content_title, content_text)
-        feedback_url = "./"
+        feedback_url = "./feedback_base_ad"
         return render.index(content_title, content_text,\
         	rec_total, recs, \
         	other_info, feedback_url)
@@ -39,5 +39,7 @@ class ContentIndex:
         return rec_total, recs, other_info
 
 class Feedback:
-    def POST(self, title, recid, message):   
-    	pass
+
+    def POST(self):   
+        data = web.input()
+    	return 'feed back', 'title:', data['title'], ', recid:', data['recid'], ', message:', data['message']
