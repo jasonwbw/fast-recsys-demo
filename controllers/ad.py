@@ -42,4 +42,7 @@ class Feedback:
 
     def POST(self):   
         data = web.input()
+        self.handle_feedback_data(data)
+
+    def handle_feedback_data(self, data):
     	return 'feed back', 'title:', data['title'], ', recid:', data['recid'], ', message:', data['message']
