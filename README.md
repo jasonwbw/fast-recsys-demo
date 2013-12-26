@@ -1,4 +1,4 @@
 fast-recsys-deom
 ================
 
-build fast recommend system demo based on web.py
+build fast recommend system demo based on web.py and numpy.
