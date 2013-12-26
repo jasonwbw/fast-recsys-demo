@@ -68,3 +68,9 @@ class AdCache(object):
 			return self.cache[ad_c]
 		except:
 			return []
+
+	def __iter__(self):  
+		res = []
+		for ads in self.cache.values():
+			res += ads
+	    return res

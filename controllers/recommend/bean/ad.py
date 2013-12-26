@@ -52,7 +52,7 @@ class Ad(object):
     	content : the ad content
     '''    
 
-    __metaclass__ = ABCMeta
+	__metaclass__ = ABCMeta
 
 	def __init__(self, ad_c, keywords = [], title = None, content = None):
 		self.ad_c = ad_c
@@ -100,6 +100,7 @@ class DefaultAd(Ad):
 
 
 class TfAd(Ad):
+
 	'''
 	Ad's implementation class to return the vector contain words in keywords/title/content with df
 	'''
