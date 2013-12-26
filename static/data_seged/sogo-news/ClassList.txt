@@ -1,0 +1,4 @@
+#http://www.sogou.com/labs/dl/c.html
+#seged by http://www.ltp-cloud.com/demo/
+C000010	IT
+C000014	体育
