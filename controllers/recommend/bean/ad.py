@@ -22,13 +22,22 @@ class AdCategory(object):
 		self.keywords = keywords
 		self.extend_keywords = extend_keywords
 
-	def get_vec(self):
-		'''Get the vectory of category
+	def get_vec(self, needkeywords = False, need_extend_keywords = False):
+		'''Get the vector of category
+
+		Args:
+			needkeywords : need category keywords or not for vector
+			need_extend_keywords ：need extended category keywords or not for vector
 
 		Returns:
-			the vectory represent this category
+			the vector represent this category
 		'''
-		return [self.name].extend(self.keywords).extend(self.extend_keywords)]
+		res = [self.name]
+		if needkeywords:
+			res += self.keywords
+		if need_extend_keywords:
+			res += self.extend_keywords
+		return res
 
 
 class Ad(object):
@@ -51,44 +60,55 @@ class Ad(object):
 		self.title = title
 		self.content = content
 
-	def get_adc_vec(self):
-		'''Get the vectory of category
+	def get_adc_vec(self, needkeywords = False, need_extend_keywords = False):
+		'''Get the vector of category
+
+		Args:
+			needkeywords : need category keywords or not for vector
+			need_extend_keywords ：need extended category keywords or not for vector
 
 		Returns:
-			the vectory represent this ad's category
+			the vector represent this ad's category
 		'''
-		return self.ad_c.get_vec()
+		return self.ad_c.get_vec(needkeywords = needkeywords, need_extend_keywords = need_extend_keywords)
 
 	@abstractmethod
-	def get_vec(self):
+	def get_vec(self, needcontent = True):
+		'''Get the ad vector]
+
+		Args:
+			needcontent : need title and content or not, if not just use keywords
+		Returns:
+			the vector represent this content
+		'''
 		pass
 
 
 class DefaultAd(Ad):
 
 	'''
-	Default implementation class. Return the vectory contain words in keywords/title/content
+	Default implementation class. Return the vector contain words in keywords/title/content
 	'''
 
-	def get_vec(self):
+	def get_vec(self, needcontent = True):
 		res = copy.copy(self.keywords)
-		if self.title != '':
+		if needcontent and self.title != '':
 			res += self.title.split()
-		if self.content != '':
+		if needcontent and self.content != '':
 			res += self.content.split())
 		return res
 
 
 class TfAd(Ad):
 	'''
-	Ad's implementation class to return the vectory contain words in keywords/title/content with df
+	Ad's implementation class to return the vector contain words in keywords/title/content with df
 	'''
 
-	def get_vec(self):
+	def get_vec(self, needcontent = True):
 		words = copy.copy(self.keywords)
-		if self.title != '':
+		if needcontent and self.title != '':
 			words += self.title.split()
-		if self.content != '':
+		if needcontent and self.content != '':
 			words += self.content.split())
 		res = {}
 		for term in words:
