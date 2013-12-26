@@ -70,6 +70,7 @@ class DefaultContent(Content):
 
 
 class TfAd(Ad):
+	
 	'''
 	Content's implementation class to return the vector contain words in title/content with df
 	'''
