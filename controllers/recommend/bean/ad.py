@@ -55,7 +55,7 @@ class Ad(object):
 
 	__metaclass__ = ABCMeta
 
-	def __init__(self, key, ad_c, keywords = [], title = None, content = None):
+	def __init__(self, key, ad_c, keywords = [], title = '', content = ''):
 		self.key = key
 		self.ad_c = ad_c
 		self.keywords = keywords
@@ -97,7 +97,7 @@ class DefaultAd(Ad):
 		if needcontent and self.title != '':
 			res += self.title.split()
 		if needcontent and self.content != '':
-			res += self.content.split())
+			res += self.content.split()
 		return res
 
 
@@ -112,7 +112,7 @@ class TfAd(Ad):
 		if needcontent and self.title != '':
 			words += self.title.split()
 		if needcontent and self.content != '':
-			words += self.content.split())
+			words += self.content.split()
 		res = {}
 		for term in words:
 			try:

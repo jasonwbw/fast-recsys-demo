@@ -5,8 +5,8 @@
 
 from abc import ABCMeta, abstractmethod
 
-class Content(object):
-
+class Content(object):  
+	
 	'''
     Abstract class, represent the content
     
@@ -15,11 +15,11 @@ class Content(object):
     	category_extend : the words extended for category, list of words
     	title : the content title, seged data
     	content : the content text, seged data
-    '''    
+    '''  
 
-    __metaclass__ = ABCMeta
+	__metaclass__ = ABCMeta
 
-	def __init__(self, category = None, category_extend = [] title = None, content = None, **args):
+	def __init__(self, category = None, category_extend = [], title = None, content = None, **args):
 		self.category = category
 		self.category_extend = category_extend
 		self.title = title
@@ -97,7 +97,7 @@ class TfContent(Content):
 		if self.title:
 			words += self.title.split()
 		if self.content:
-			words += self.content.split())
+			words += self.content.split()
 		res = {}
 		for term in words:
 			try:
