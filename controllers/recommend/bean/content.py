@@ -46,6 +46,7 @@ class Content(object):
 		'''
 		pass
 
+
 class DefaultContent(Content):
 
 	'''
@@ -69,7 +70,7 @@ class DefaultContent(Content):
 		return res
 
 
-class TfAd(Ad):
+class TfContent(Content):
 	
 	'''
 	Content's implementation class to return the vector contain words in title/content with df
