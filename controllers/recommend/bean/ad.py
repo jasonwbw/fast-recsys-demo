@@ -46,6 +46,7 @@ class Ad(object):
     Abstract class, represent the ad
     
     Attributes:
+    	key : the key to get the total info from disk or other memorycache
     	ad_c : an instance of AdCategory
     	keywords : the keywords of this ad
     	title : the ad title
@@ -54,7 +55,8 @@ class Ad(object):
 
 	__metaclass__ = ABCMeta
 
-	def __init__(self, ad_c, keywords = [], title = None, content = None):
+	def __init__(self, key, ad_c, keywords = [], title = None, content = None):
+		self.key = key
 		self.ad_c = ad_c
 		self.keywords = keywords
 		self.title = title
