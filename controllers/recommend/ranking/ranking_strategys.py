@@ -32,18 +32,18 @@ class Ranking(object):
 			topk : top k ranking element
 
     	        Returns:
-		        list of (ad, rank)
+		        list of (ad.key, rank)
 		'''
 		vec_content = self.builder.get_vec(self.content_vec_getter(content))
 		if topk != 0:
 			heap = TopkHeap(topk)
 			for ad in ad_cache:
-				heap.push((self.distance.distance(self.builder.get_vec(self.ad_vec_getter(ad)), vec_content), ad))
+				heap.push((self.distance.distance(self.builder.get_vec(self.ad_vec_getter(ad)), vec_content), ad.key))
 			return heap.topk()
 		else:
 			heap = []
 			for ad in ad_cache:
-				heap.append((self.distance.distance(self.builder.get_vec(self.ad_vec_getter(ad)), vec_content), ad))
+				heap.append((self.distance.distance(self.builder.get_vec(self.ad_vec_getter(ad)), vec_content), ad.key))
 			return sorted(heap)[::-1]
 
 
