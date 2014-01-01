@@ -34,7 +34,7 @@ class VecBuilder(object):
 		pass
 
 
-class DefaultVecBuilder(object):
+class DefaultVecBuilder(VecBuilder):
 
 	'''
     Default implementation class. Return the vector contain all terms with same value
@@ -48,7 +48,7 @@ class DefaultVecBuilder(object):
 		return res
 
 
-class TfidfVecBuilder(object):
+class TfidfVecBuilder(VecBuilder):
 
 	'''
 	Tfidf value for all terms.
