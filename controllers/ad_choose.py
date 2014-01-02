@@ -4,13 +4,36 @@
 import web
 from config import settings
 from recommend.recommend_center import ChooseController
+from abc import ABCMeta, abstractmethod
 
 render = settings.render
 
 # global attribute
 controller = ChooseController()
 
-class ContentIndex: 
+class AbstractContentIndex:
+
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def __get_content(self, **args):
+        '''Get the content's title and detail text
+
+        Returns:
+            content_title, content_text
+        '''
+        pass
+
+    @abstractmethod
+    def _get_rec(self, **args):
+        '''Get the recommend result
+
+        Returns:
+            total information, recs, other information
+            (recs is [{'text':*, 'img':*}], if len(recs)%3 is not 0, the add enough empty element to recs.)
+        '''
+
+class ContentIndex(AbstractContentIndex): 
 
     def GET(self, page = None):
         global controller
