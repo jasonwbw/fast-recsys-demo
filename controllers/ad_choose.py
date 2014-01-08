@@ -3,20 +3,21 @@
 
 import web
 from config import settings
-from recommend.recommend_center import ChooseController
+from recommend.recommend_center import RankingChooseController, RetrivalAndRankingChooseController
 from abc import ABCMeta, abstractmethod
 
 render = settings.render
 
 # global attribute
-controller = ChooseController()
+# controller = RankingChooseController()
+controller = RetrivalAndRankingChooseController()
 
 class AbstractContentIndex:
 
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __get_content(self, **args):
+    def _get_content(self, **args):
         '''Get the content's title and detail text
 
         Returns:
