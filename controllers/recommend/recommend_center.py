@@ -71,7 +71,7 @@ class RankingChooseController(ChooseController):
 		self.load_conf()
 		getters = self.build_vec_getter()
 
-		self.ranking = Ranking(self.builder, self.distance, getters[0], getters[1])
+		self.ranking = Ranking(self.builder, self.distance, getters[1], getters[2])
 		self.ad_cache = self.loader.load_ads()[1]
 
 		self.number_content()
@@ -106,9 +106,10 @@ class RankingChooseController(ChooseController):
 		Returns:
 			tuple of ad vector getter and content vector getter
 		'''
+		ad_c_vec_getter = lambda vec : vec.get_vec()
 		ad_vec_getter = lambda vec : vec.get_vec()
 		content_vec_getter = lambda vec : vec.get_vec()
-		return (ad_vec_getter, content_vec_getter)
+		return (ad_c_vec_getter, ad_vec_getter, content_vec_getter)
 
 	def number_content(self):
 		'''Give all content number and save the key'''
@@ -154,11 +155,11 @@ class RetrivalAndRankingChooseController(RankingChooseController):
 		self.load_conf()
 		getters = self.build_vec_getter()
 
-		self.ranking = Ranking(self.builder, self.distance, getters[0], getters[1])
+		self.ranking = Ranking(self.builder, self.distance, getters[1], getters[2])
 		self.ad_c_cache, self.ad_cache = self.loader.load_ads()
 
 		self.number_content()
-		self.retrival = CategoryRetrivalStrategyCenter(builder = self.builder, distance = self.distance)
+		self.retrival = CategoryRetrivalStrategyCenter(self.builder, self.distance, getters[0], getters[2])
 
 	def get_content_ads(self, num):
 		'''Get the content whose id is num and the recommend ads
@@ -175,9 +176,10 @@ class RetrivalAndRankingChooseController(RankingChooseController):
 		
 		categorys = self.retrival.get_category(content_obj, self.ad_c_cache)
 		retrival_ads = []
+		print 'categorys:'
 		for category in categorys:
+			print category.name
 			retrival_ads += self.ad_cache.get_ads(category)
-		print retrival_ads
 		
 		ads = self.ranking.ranking(content_obj, retrival_ads, topk = 2)
 		res_ad = []
