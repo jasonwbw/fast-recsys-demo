@@ -113,9 +113,8 @@ class DemoLoader(Loader):
 		return (category, content)
 
 	def load_ads(self, **args):
-		from ..bean.ad_cache import DefalutAdCache
-		from ..bean.ad import DefaultAd
-		from ..bean.ad import AdCategory
+		from ..bean.ad_cache import DefalutAdCache, AdCategoryCache
+		from ..bean.ad import DefaultAd, AdCategory
 
 		ad_cache = DefalutAdCache()
 		with open(self.ad_vec_file, 'r') as fp:
@@ -126,10 +125,15 @@ class DemoLoader(Loader):
 				ad_c = AdCategory(category)
 				ad = DefaultAd(linecache_num, ad_c, title = words)
 				ad_cache.push(ad)
-		return (None, ad_cache)
+		ad_c_cache = AdCategoryCache()
+		with open(self.ad_c_vec_file, 'r') as fp:
+			for line in fp:
+				category, keywords = line.strip().split(':')
+				ad_c_cache.push(AdCategory(category, keywords = keywords.split('\t')))
+		return (ad_c_cache, ad_cache)
 
 	def load_content(self, key):
-		from ..bean.content import TfContent
+		from ..bean.content import DefaultContent
 
 		category = key['category']
 		file_num = key['file']
@@ -137,7 +141,7 @@ class DemoLoader(Loader):
 		with open(os.path.join(os.path.join(self.content_vec_folder, category), file_num), 'r') as fp:
 			for line in fp:
 				content = content + line.strip() + ' '
-		return TfContent(category = category, content = content)
+		return DefaultContent(category = category, content = content)
 
 	def random_content(self):
 		pass
