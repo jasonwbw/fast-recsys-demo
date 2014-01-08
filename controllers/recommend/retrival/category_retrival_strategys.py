@@ -20,9 +20,16 @@ class CategoryRetrivalStrategyCenter(object):
 
 	def __init__(self):
 		self.pipelines = []
-
 		cf = ConfigParser.ConfigParser()
-		cf.read("strategys.conf")
+
+		import os
+		paths = ['controllers', 'recommend', 'retrival', 'strategys.cfg']
+		_file = os.getcwd()
+		for path in paths:
+			_file = os.path.join(_file, path)
+		with open(_file,'r') as configfile:       
+			cf.readfp(configfile)	
+
 		options = cf.options("pipeline")
 		global thismodule
 		for option in options:
