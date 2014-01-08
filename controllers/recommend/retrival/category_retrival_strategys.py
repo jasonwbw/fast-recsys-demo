@@ -18,7 +18,7 @@ class CategoryRetrivalStrategyCenter(object):
     	pipelines : the pipelines queue
     '''  
 
-	def __init__(self):
+	def __init__(self, builder = None, distance = None):
 		self.pipelines = []
 		cf = ConfigParser.ConfigParser()
 
@@ -35,7 +35,7 @@ class CategoryRetrivalStrategyCenter(object):
 		for option in options:
 			args = eval(cf.get("args", option))
 			_class = cf.get("pipeline", option)
-			tmp_pipeline = getattr(thismodule, _class)(args = args)
+			tmp_pipeline = getattr(thismodule, _class)(builder = builder, distance = distance, args = args)
 			self.pipelines.append(tmp_pipeline)
 
 	def get_category(self, content, adc_cache):
@@ -50,7 +50,7 @@ class CategoryRetrivalStrategyCenter(object):
 		Returns:
 			the list of ad.AdCategory
 		'''
-		for pipeline in pipelines:
+		for pipeline in self.pipelines:
 			res = pipeline.retrival(content, adc_cache)
 			if res:
 				return res
@@ -65,7 +65,7 @@ class CategoryRetrivalStrategyPipeline(object):
 
 	__metaclass__ = ABCMeta
 
-	def __init__(self, **args):
+	def __init__(self, builder = None, distance = None, **args):
 		pass
 
 	@abstractmethod
@@ -87,21 +87,16 @@ class DefaultCategoryRetrivalStrategyPipeline(CategoryRetrivalStrategyPipeline):
 	'''Content category compute cosine with ad category
 	'''
 
+	def __init__(self, builder = None, distance = None, **args):
+		self.builder = builder
+		self.distance = distance
+
 	def retrival(self, content, adc_cache):
-		content_c_vec = content.get_contentc_vec()
+		content_vec = self.builder.get_vec(content.get_vec())
 		res = []
 		for ad_c in adc_cache:
-			ad_c_vec = ad_c.get_vec()
-			cosine = 0.0
-			if len(content_c_vec) < len(ad_c_vec):
-				for term in content_c_vec:
-					if term in ad_c_vec:
-						cosine += content_c_vec[term] * ad_c_vec[term]
-			else:
-				for term in ad_c_vec:
-					if term in content_c_vec:
-						cosine += content_c_vec[term] * ad_c_vec[term]
-			if cosine > 0.5:
+			ad_c_vec = self.builder.get_vec(ad_c.get_vec())
+			if self.distance.distance(ad_c_vec, content_vec) > 0:
 				res.append(ad_c)
 		return res
 
