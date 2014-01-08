@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 
 render = settings.render
 
-# global attribute
+# global attributes
 # controller = RankingChooseController()
 controller = RetrivalAndRankingChooseController()
 
@@ -36,9 +36,13 @@ class AbstractContentIndex:
 
 class ContentIndex(AbstractContentIndex): 
 
-    def GET(self, page = None):
+    def GET(self):
         global controller
-        page_num = page and int(page) or 0
+        user_data = web.input()
+        try:
+            page_num = int(user_data.page)
+        except:
+            page_num = 0
         content, ads = controller.get_content_ads(page_num)
         content_title, content_text = self._get_content(content = content)
         rec_total, recs, other_info = self._get_rec(ads = ads)

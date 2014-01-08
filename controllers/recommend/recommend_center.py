@@ -137,7 +137,7 @@ class RankingChooseController(ChooseController):
 			(content, [list of ad content])
 		'''
 		if num >= self.count:
-			return None
+			return (('', ''), [])
 		content_obj = self.loader.load_content(self.content_key[num])
 		ads = self.ranking.ranking(content_obj, self.ad_cache, topk = 2)
 		res_ad = []
@@ -171,7 +171,8 @@ class RetrivalAndRankingChooseController(RankingChooseController):
 			(content, [list of ad content])
 		'''
 		if num >= self.count:
-			return None
+			return (('', ''), [])
+		print num, self.content_key[num]
 		content_obj = self.loader.load_content(self.content_key[num])
 		
 		categorys = self.retrival.get_category(content_obj, self.ad_c_cache)
