@@ -17,6 +17,20 @@ class AdCategoryCache(object):
 	def __init__(self, ad_cs = []):
 		self.ad_cs = ad_cs
 
+	def find_by_name(self, ad_c_name):
+		'''Get the ad_c object by name
+
+		Args:
+			ad_c_name : category's name
+
+		Returns:
+			the ad_c object
+		'''
+		for ad_c in self.ad_cs:
+			if ad_c.name == ad_c_name:
+				return ad_c
+		return None
+
 	def push(self, ad_c):
 		'''Load new category object
 
@@ -26,7 +40,7 @@ class AdCategoryCache(object):
 		self.ad_cs.append(ad_c)
 
 	def __iter__(self):  
-	    return self.ad_cs
+	    return self.ad_cs.__iter__()
 
 
 class AdCache(object):
@@ -80,7 +94,7 @@ class DefalutAdCache(AdCache):
 	def get_ads(self, ad_c):
 		res = []
 		for ad in self.cache:
-			if ad.ad_c == ad_c:
+			if ad.ad_c.name == ad_c.name:
 				res.append(ad)
 		return res
 
@@ -101,19 +115,19 @@ class AdCacheWithCategory(AdCache):
 		self.cache = {}
 		for ad in ads:
 			try:
-				self.cache[ad.ad_c].append(ad)
+				self.cache[ad.ad_c.name].append(ad)
 			except:
-				self.cache[ad.ad_c] = [ad]
+				self.cache[ad.ad_c.name] = [ad]
 
 	def push(self, ad):
 		try:
-			self.cache[ad.ad_c].append(ad)
+			self.cache[ad.ad_c.name].append(ad)
 		except:
-			self.cache[ad.ad_c] = [ad]
+			self.cache[ad.ad_c.name] = [ad]
 
 	def get_ads(self, ad_c):
 		try:
-			return self.cache[ad_c]
+			return self.cache[ad_c.name]
 		except:
 			return []
 
